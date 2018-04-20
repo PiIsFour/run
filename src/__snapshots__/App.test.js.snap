@@ -4,28 +4,17 @@ exports[`app snapshot matches 1`] = `
 <div
   className="App"
 >
-  <header
-    className="App-header"
-  >
-    <img
-      alt="logo"
-      className="App-logo"
-      src="logo.svg"
-    />
-    <h1
-      className="App-title"
-    >
-      Welcome to React
-    </h1>
-  </header>
-  <p
-    className="App-intro"
-  >
-    To get started, edit 
-    <code>
-      src/App.js
-    </code>
-     and save to reload.
-  </p>
+  <div>
+    <span>
+      north: 
+      0
+      m
+    </span>
+    <span>
+      east: 
+      0
+      m
+    </span>
+  </div>
 </div>
 `;
