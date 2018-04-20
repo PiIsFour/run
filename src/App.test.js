@@ -8,12 +8,12 @@ import App from './App'
 describe('app', () => {
 	it('renders without crashing', () => {
 		const div = document.createElement('div')
-		ReactDOM.render(<App />, div)
+		ReactDOM.render(<App geolocation={{watchPosition: () => {}}} />, div)
 		ReactDOM.unmountComponentAtNode(div)
 	})
 
 	it('snapshot matches', () => {
-		const wrapper = shallow(<App />)
+		const wrapper = shallow(<App geolocation={{watchPosition: () => {}}} />)
 		expect(enzymeToJson(wrapper)).toMatchSnapshot()
 	})
 })
