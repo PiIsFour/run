@@ -1,7 +1,8 @@
 {
   "name": "run",
   "version": "0.1.0",
-  "private": true,
+	"private": true,
+	"homepage": "https://PiIsFour.github.io/run/",
   "dependencies": {
     "npm": "^5.8.0",
     "react": "^16.3.0",
@@ -10,7 +11,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+		"build": "react-scripts build",
+		"lint": "eslint src",
     "test": "react-scripts test --env=jsdom",
     "coverage": "npm test -- --coverage",
     "eject": "react-scripts eject"
