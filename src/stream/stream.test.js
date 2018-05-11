@@ -105,4 +105,15 @@ describe('stream', () => {
 	it('creator must not return a onClose handler', () => {
 		stream(() => {}).close()
 	})
+
+	it('can reduce', () => {
+		const s = stream()
+		const mock = jest.fn()
+		s.reduce((accumulator, currentValue) => accumulator + currentValue, 3)
+			.map(mock)
+		s.push(2)
+		expect(mock).toBeCalledWith(5)
+		s.push(5)
+		expect(mock).toBeCalledWith(10)
+	})
 })

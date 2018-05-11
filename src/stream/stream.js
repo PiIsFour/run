@@ -35,6 +35,18 @@ class Stream {
 	close () {
 		this.onClose()
 	}
+
+	reduce (cb, initialValue) {
+		let accumulator = initialValue
+		const s = new Stream()
+		this.push = value => {
+			accumulator = cb(accumulator, value)
+			s.push(accumulator)
+		}
+		this.pushError = error => s.pushError(error)
+		s.onClose = this.onClose
+		return s
+	}
 }
 
 export default function createStream (creator = () => {}) {
