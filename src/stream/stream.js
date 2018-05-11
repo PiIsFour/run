@@ -40,8 +40,12 @@ class Stream {
 		let accumulator = initialValue
 		const s = new Stream()
 		this.push = value => {
-			accumulator = cb(accumulator, value)
-			s.push(accumulator)
+			try {
+				accumulator = cb(accumulator, value)
+				s.push(accumulator)
+			} catch (error) {
+				s.pushError(error)
+			}
 		}
 		this.pushError = error => s.pushError(error)
 		s.onClose = this.onClose
@@ -51,8 +55,12 @@ class Stream {
 	filter (cb) {
 		const s = new Stream()
 		this.push = value => {
-			if (cb(value)) {
-				s.push(value)
+			try {
+				if (cb(value)) {
+					s.push(value)
+				}
+			} catch (error) {
+				s.pushError(error)
 			}
 		}
 		this.pushError = error => s.pushError(error)
