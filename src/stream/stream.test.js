@@ -13,6 +13,15 @@ describe('stream', () => {
 		expect(mock).toBeCalledWith(42)
 	})
 
+	it('creator is optional', () => {
+		const s = stream()
+		const mock = jest.fn()
+		s.map(mock)
+		const data = 4
+		s.push(data)
+		expect(mock).toBeCalledWith(data)
+	})
+
 	it('pushed errors do not show up in map', () => {
 		const mock = jest.fn()
 		let event = () => {}
@@ -95,5 +104,27 @@ describe('stream', () => {
 
 	it('creator must not return a onClose handler', () => {
 		stream(() => {}).close()
+	})
+
+	it('can reduce', () => {
+		const s = stream()
+		const mock = jest.fn()
+		s.reduce((accumulator, currentValue) => accumulator + currentValue, 3)
+			.map(mock)
+		s.push(2)
+		expect(mock).toBeCalledWith(5)
+		s.push(5)
+		expect(mock).toBeCalledWith(10)
+	})
+
+	it('can filter', () => {
+		const s = stream()
+		const mock = jest.fn()
+		s.filter(x => x > 2)
+			.map(mock)
+		s.push(2)
+		expect(mock).not.toBeCalledWith(2)
+		s.push(5)
+		expect(mock).toBeCalledWith(5)
 	})
 })
