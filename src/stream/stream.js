@@ -47,6 +47,18 @@ class Stream {
 		s.onClose = this.onClose
 		return s
 	}
+
+	filter (cb) {
+		const s = new Stream()
+		this.push = value => {
+			if (cb(value)) {
+				s.push(value)
+			}
+		}
+		this.pushError = error => s.pushError(error)
+		s.onClose = this.onClose
+		return s
+	}
 }
 
 export default function createStream (creator = () => {}) {

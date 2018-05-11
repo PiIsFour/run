@@ -116,4 +116,15 @@ describe('stream', () => {
 		s.push(5)
 		expect(mock).toBeCalledWith(10)
 	})
+
+	it('can filter', () => {
+		const s = stream()
+		const mock = jest.fn()
+		s.filter(x => x > 2)
+			.map(mock)
+		s.push(2)
+		expect(mock).not.toBeCalledWith(2)
+		s.push(5)
+		expect(mock).toBeCalledWith(5)
+	})
 })
