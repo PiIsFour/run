@@ -39,6 +39,6 @@ class Stream {
 
 export default function createStream (creator) {
 	const s = new Stream()
-	s.onClose = creator(s)
+	s.onClose = creator(s) || (() => {})
 	return s
 }

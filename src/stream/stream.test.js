@@ -92,4 +92,8 @@ describe('stream', () => {
 		s.close()
 		expect(mock).toBeCalled()
 	})
+
+	it('creator must not return a onClose handler', () => {
+		stream(() => {}).close()
+	})
 })
