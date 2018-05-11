@@ -3,6 +3,7 @@ class Stream {
 		this.push = () => {}
 		this.pushError = () => {}
 	}
+
 	map (cb) {
 		const s = new Stream()
 		this.push = value => {
@@ -13,8 +14,10 @@ class Stream {
 			}
 		}
 		this.pushError = error => s.pushError(error)
+		s.onClose = this.onClose
 		return s
 	}
+
 	catch (cb) {
 		const s = new Stream()
 		this.push = value => s.push(value)
@@ -25,12 +28,17 @@ class Stream {
 				s.pushError(error)
 			}
 		}
+		s.onClose = this.onClose
 		return s
+	}
+
+	close () {
+		this.onClose()
 	}
 }
 
 export default function createStream (creator) {
 	const s = new Stream()
-	creator(s)
+	s.onClose = creator(s)
 	return s
 }

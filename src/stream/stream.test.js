@@ -71,4 +71,25 @@ describe('stream', () => {
 		event(42)
 		expect(mock).toBeCalledWith(error)
 	})
+
+	it('closes the stream', () => {
+		const mock = jest.fn()
+		const s = stream((stream) => {
+			return mock
+		})
+		expect(mock).not.toBeCalled()
+		s.close()
+		expect(mock).toBeCalled()
+	})
+
+	it('closes the stream from downstream', () => {
+		const mock = jest.fn()
+		const s = stream((stream) => {
+			return mock
+		}).map(x => x)
+			.catch(() => {})
+		expect(mock).not.toBeCalled()
+		s.close()
+		expect(mock).toBeCalled()
+	})
 })
