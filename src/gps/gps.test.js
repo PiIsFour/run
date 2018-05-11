@@ -26,4 +26,16 @@ describe('gps', () => {
 		geolocationMock.watchPosition.mock.calls[0][1](error)
 		expect(mock).toBeCalledWith(error)
 	})
+
+	it('stops tracking when the stream is closed', () => {
+		const id = 42
+		const geolocationMock = {
+			watchPosition: jest.fn().mockReturnValue(id),
+			clearWatch: jest.fn()
+		}
+		const s = gpsStream(geolocationMock)
+		expect(geolocationMock.clearWatch).not.toBeCalledWith(id)
+		s.close()
+		expect(geolocationMock.clearWatch).toBeCalledWith(id)
+	})
 })
